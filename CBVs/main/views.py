@@ -1,3 +1,4 @@
+from .forms import StudentForm  # Make sure to import your form class
 from django.shortcuts import render
 from django.http import HttpResponse
 
@@ -44,9 +45,7 @@ class HomeClassView(View):
 
 # form in both function view and class based view
 # function based view
-from django.shortcuts import render
-from django.http import HttpResponse
-from .forms import StudentForm  # Make sure to import your form class
+
 
 def formview(request):
     if request.method == 'POST':
@@ -56,7 +55,7 @@ def formview(request):
             name = form.cleaned_data['name']
             age = form.cleaned_data['age']
             message = form.cleaned_data['message']
-            
+
             # Process the form data
             print(f"Name: {name}, Age: {age}, Message: {message}")
 
@@ -68,3 +67,27 @@ def formview(request):
 
     return render(request, 'main/form.html', {'form': form})
 
+
+# class based
+
+class FormClassView(View):
+    def get(self, request):
+        form = StudentForm()
+        return render(request, 'main/form.html', {'form': form})
+
+    def post(self, request):
+        form = StudentForm(request.POST)
+        if form.is_valid():
+            # Process the form data
+            name = form.cleaned_data['name']
+            age = form.cleaned_data['age']
+            message = form.cleaned_data['message']
+
+            # You can process or save the data as needed
+            print(f"Name: {name}, Age: {age}, Message: {message}")
+
+            # Redirect or render a success template
+            return HttpResponse("Form submitted successfully!")
+
+        # If form is not valid, re-render the form with errors
+        return render(request, 'main/form.html', {'form': form})
