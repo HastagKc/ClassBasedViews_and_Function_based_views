@@ -28,5 +28,6 @@ urlpatterns = [
     path('homeclassview/', views.HomeClassView.as_view(), name='homeclassview'),
 
     # form
-    path('func_form/', views.formview, name='formview')
+    path('func_form/', views.formview, name='formview'),
+    path('class_form/', views.FormClassView.as_view(), name='class_form'),
 ]
