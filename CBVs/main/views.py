@@ -1,4 +1,3 @@
-from .forms import StudentForm  # Make sure to import your form class
 from django.shortcuts import render
 from django.http import HttpResponse
 
@@ -45,7 +44,9 @@ class HomeClassView(View):
 
 # form in both function view and class based view
 # function based view
-
+from django.shortcuts import render
+from django.http import HttpResponse
+from .forms import StudentForm  # Make sure to import your form class
 
 def formview(request):
     if request.method == 'POST':
@@ -55,7 +56,7 @@ def formview(request):
             name = form.cleaned_data['name']
             age = form.cleaned_data['age']
             message = form.cleaned_data['message']
-
+            
             # Process the form data
             print(f"Name: {name}, Age: {age}, Message: {message}")
 
@@ -66,3 +67,4 @@ def formview(request):
         form = StudentForm()
 
     return render(request, 'main/form.html', {'form': form})
+
